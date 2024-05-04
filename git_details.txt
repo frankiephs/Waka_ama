@@ -1,3 +1,2 @@
-cd /path/to/your/repository
-git config user.name "frankiephs"
-git config user.email "fb23419@student.phs.school.nz"
+in case of permission denied while pushing
+- Resolve by changing the github credentials in the credentials manager.
