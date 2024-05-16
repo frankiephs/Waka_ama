@@ -1,9 +1,10 @@
 import os
 
-folder_path = "waka_ama_res/WakaNats2017"
+folder_path = "waka_ama_res/WakaNats2018"
 files_categorized = []
 disqualified_keywords = ['DNS', 'DQ', 'disqualified', 'Disqualified']
 regional_association_dictionary = {}
+row_length_bracket = 10
 
 for filename in os.listdir(folder_path):
         # Only extract finals files
@@ -58,6 +59,13 @@ for i in files_categorized:
                 while '' in row_list:
                         row_list.remove('')
 
+                # ensure row is complete. if not, skips the row and prints an error
+                if len(row_list) < row_length_bracket:
+                        print(
+                            f"[!] ERROR: row elements are insufficient. Expected row length bracket =={row_length_bracket} row: ==> {row_list} <=="
+                        )
+                        continue
+
                 # get the place and regional association
                 place = int(row_list[0])
                 regional_association = row_list[4]
@@ -101,5 +109,3 @@ sorted_regional_association_dictionary = dict(
 # output the regional assoc with their ranks and pts
 for count, item in enumerate(sorted_regional_association_dictionary):
         print(count + 1, item, sorted_regional_association_dictionary[item])
-        print("'" + item + "'", ":",
-              sorted_regional_association_dictionary[item], ",")
