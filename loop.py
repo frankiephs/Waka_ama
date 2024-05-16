@@ -1,6 +1,7 @@
 import os
 
-folder_path = "waka_ama_res/WakaNats2018"
+year = 2018
+folder_path = f"waka_ama_res/WakaNats{year}"
 files_categorized = []
 disqualified_keywords = ['DNS', 'DQ', 'disqualified', 'Disqualified']
 regional_association_dictionary = {}
@@ -116,3 +117,55 @@ sorted_regional_association_dictionary = dict(
 # output the regional assoc with their ranks and pts
 for count, item in enumerate(sorted_regional_association_dictionary):
         print(count + 1, item, sorted_regional_association_dictionary[item])
+
+print("[!] .lif files extracted successfully")
+
+print("")
+csv_option = input("Export to csv? (y/n) >>")
+
+print("")
+
+if csv_option == "y":
+
+        # importing the csv module
+        import csv
+
+        # initializing the titles and rows list
+        fields = ['rank', 'regional_association', 'points']
+        rows = []
+
+        for count, item in enumerate(sorted_regional_association_dictionary):
+                row = []
+                rows.append([
+                    count + 1, item,
+                    sorted_regional_association_dictionary[item]
+                ])
+
+        # csv file name
+        filename = f"{year}.csv"
+        # writing to csv file
+        with open(filename, 'w') as csvfile:
+                # creating a csv writer object
+                csvwriter = csv.writer(csvfile)
+                # writing the fields
+                csvwriter.writerow(fields)
+                # writing the data rows
+                csvwriter.writerows(rows)
+
+        print("[!] Exported Successfully")
+        print("")
+        option_read_file = input("Read file? (y/n) >>")
+
+        if option_read_file == "y":
+                # read the csv file
+                with open(filename, 'r') as csvfile:
+                        # creating a csv reader object
+                        csvreader = csv.reader(csvfile)
+                        # extracting each data row one by one
+                        for row in csvreader:
+                                # row variable is a list that represents a row in csv
+                                print(row[0], row[1], row[2])
+        else:
+                pass
+else:
+        pass
