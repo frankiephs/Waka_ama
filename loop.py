@@ -3,6 +3,7 @@ import os
 folder_path = "waka_ama_res/WakaNats2017"
 files_categorized = []
 disqualified_keywords = ['DNS', 'DQ', 'disqualified', 'Disqualified']
+regional_association_dictionary = {}
 
 for filename in os.listdir(folder_path):
         # Only extract finals files
@@ -12,11 +13,11 @@ for filename in os.listdir(folder_path):
         else:
 
                 file_path = os.path.join(folder_path, filename)
-        
+
                 with open(file_path, 'r', encoding='latin-1') as file:
                         # Read all the contents of the file
                         content = file.read()
-        
+
                         # categorizing into header and body components
                         page_category = {'header': '', 'body': []}
                         split_content = content.splitlines()
@@ -56,4 +57,49 @@ for i in files_categorized:
                 # remove empty elements
                 while '' in row_list:
                         row_list.remove('')
-                print(row_list)
+
+                # get the place and regional association
+                place = int(row_list[0])
+                regional_association = row_list[4]
+                score = 0
+
+                # apply scores depending on the place
+                if place == 1:
+                        score = 8
+                elif place == 2:
+                        score = 7
+                elif place == 3:
+                        score = 6
+                elif place == 4:
+                        score = 5
+                elif place == 5:
+                        score = 4
+                elif place == 6:
+                        score = 3
+                elif place == 7:
+                        score = 2
+                elif place >= 8:
+                        score = 1
+                else:
+                        print("[!] ERROR: Place value is invalid")
+                        continue
+
+                # add the row to the regional association dictionary. Adds the existing score if the regional assoc already added
+                if regional_association in regional_association_dictionary:
+                        regional_association_dictionary[
+                            regional_association] += score
+                else:
+                        regional_association_dictionary[
+                            regional_association] = score
+
+# display
+# sort through values
+sorted_regional_association_dictionary = dict(
+    sorted(regional_association_dictionary.items(),
+           key=lambda x: x[1],
+           reverse=True))
+# output the regional assoc with their ranks and pts
+for count, item in enumerate(sorted_regional_association_dictionary):
+        print(count + 1, item, sorted_regional_association_dictionary[item])
+        print("'" + item + "'", ":",
+              sorted_regional_association_dictionary[item], ",")
