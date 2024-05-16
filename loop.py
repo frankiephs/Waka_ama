@@ -15,3 +15,4 @@ for filename in os.listdir(folder_path):
                         # Read all the contents of the file
                         contents = file.read()
                         print(contents)
+                
