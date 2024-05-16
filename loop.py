@@ -53,6 +53,13 @@ for i in files_categorized:
 
         # extract the row into a list, split by the comma
         for row in body:
+
+                # check if "Te Puu Ao" exists.
+                """if "Te Puu Ao" in row:
+                        print("")
+                        print(f"[!] Te Puu Ao found in ==> {row} <== ")
+                        print("")"""
+
                 row_list = row.split(",")
 
                 # remove empty elements
